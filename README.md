@@ -89,6 +89,19 @@ GET /ping responded with pong in 22 ms
 
 Until these changes are merged, you will have to make the following changes to see the performance benefits:
 * swap the sails/waterline node module for our fork: https://github.com/PetroCloud/waterline
+  1. Delete the waterline folder in (from this repo's root) node_modules/sails/node_modules/
+  2. Change the sails package.json (node_modules/sails) from 
+  ```json
+  "dependencies": {
+    "waterline": "v10.0.0"
+  ```
+  to 
+  ```json
+    "waterline": "https://github.com/PetroCloud/waterline"
+  ```
+  
+  and then run npm install
+  
 * use our fork of sails-mongo (https://github.com/PetroCloud/sails-mongo) (this is done by default in the package.json)
 
 Doing these changes will deliver results similar to those where the event loop is not blocked. To compare, restore the vanilla waterline module and use the default sails-mongo module and you will see results similar to the ones with the event loop blocked.
